@@ -4236,10 +4236,38 @@ func (m *WorkflowTemplateRef) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_WorkflowTemplateRef proto.InternalMessageInfo
 
+func (m *WorkflowTemplateStatus) Reset()      { *m = WorkflowTemplateStatus{} }
+func (*WorkflowTemplateStatus) ProtoMessage() {}
+func (*WorkflowTemplateStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_724696e352c3df5f, []int{150}
+}
+func (m *WorkflowTemplateStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *WorkflowTemplateStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	b = b[:cap(b)]
+	n, err := m.MarshalToSizedBuffer(b)
+	if err != nil {
+		return nil, err
+	}
+	return b[:n], nil
+}
+func (m *WorkflowTemplateStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WorkflowTemplateStatus.Merge(m, src)
+}
+func (m *WorkflowTemplateStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *WorkflowTemplateStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_WorkflowTemplateStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WorkflowTemplateStatus proto.InternalMessageInfo
+
 func (m *ZipStrategy) Reset()      { *m = ZipStrategy{} }
 func (*ZipStrategy) ProtoMessage() {}
 func (*ZipStrategy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_724696e352c3df5f, []int{150}
+	return fileDescriptor_724696e352c3df5f, []int{151}
 }
 func (m *ZipStrategy) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -4440,6 +4468,7 @@ func init() {
 	proto.RegisterType((*WorkflowTemplate)(nil), "github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1.WorkflowTemplate")
 	proto.RegisterType((*WorkflowTemplateList)(nil), "github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1.WorkflowTemplateList")
 	proto.RegisterType((*WorkflowTemplateRef)(nil), "github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1.WorkflowTemplateRef")
+	proto.RegisterType((*WorkflowTemplateStatus)(nil), "github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1.WorkflowTemplateStatus")
 	proto.RegisterType((*ZipStrategy)(nil), "github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1.ZipStrategy")
 }
 
@@ -14059,6 +14088,16 @@ func (m *WorkflowTemplate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	{
+		size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintGenerated(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x1a
+	{
 		size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
 		if err != nil {
 			return 0, err
@@ -14159,6 +14198,39 @@ func (m *WorkflowTemplateRef) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i -= len(m.Name)
 	copy(dAtA[i:], m.Name)
 	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *WorkflowTemplateStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *WorkflowTemplateStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WorkflowTemplateStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.LastRunAt.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintGenerated(dAtA, i, uint64(size))
+	}
 	i--
 	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
@@ -17377,6 +17449,8 @@ func (m *WorkflowTemplate) Size() (n int) {
 	n += 1 + l + sovGenerated(uint64(l))
 	l = m.Spec.Size()
 	n += 1 + l + sovGenerated(uint64(l))
+	l = m.Status.Size()
+	n += 1 + l + sovGenerated(uint64(l))
 	return n
 }
 
@@ -17406,6 +17480,17 @@ func (m *WorkflowTemplateRef) Size() (n int) {
 	l = len(m.Name)
 	n += 1 + l + sovGenerated(uint64(l))
 	n += 2
+	return n
+}
+
+func (m *WorkflowTemplateStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.LastRunAt.Size()
+	n += 1 + l + sovGenerated(uint64(l))
 	return n
 }
 
@@ -19776,6 +19861,7 @@ func (this *WorkflowTemplate) String() string {
 	s := strings.Join([]string{`&WorkflowTemplate{`,
 		`ObjectMeta:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.ObjectMeta), "ObjectMeta", "v11.ObjectMeta", 1), `&`, ``, 1) + `,`,
 		`Spec:` + strings.Replace(strings.Replace(this.Spec.String(), "WorkflowSpec", "WorkflowSpec", 1), `&`, ``, 1) + `,`,
+		`Status:` + strings.Replace(strings.Replace(this.Status.String(), "WorkflowTemplateStatus", "WorkflowTemplateStatus", 1), `&`, ``, 1) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -19803,6 +19889,16 @@ func (this *WorkflowTemplateRef) String() string {
 	s := strings.Join([]string{`&WorkflowTemplateRef{`,
 		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
 		`ClusterScope:` + fmt.Sprintf("%v", this.ClusterScope) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *WorkflowTemplateStatus) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&WorkflowTemplateStatus{`,
+		`LastRunAt:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.LastRunAt), "Time", "v11.Time", 1), `&`, ``, 1) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -47633,6 +47729,39 @@ func (m *WorkflowTemplate) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -47852,6 +47981,89 @@ func (m *WorkflowTemplateRef) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.ClusterScope = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *WorkflowTemplateStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: WorkflowTemplateStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: WorkflowTemplateStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastRunAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.LastRunAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
